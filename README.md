@@ -1,5 +1,7 @@
 # Frontend
 
+[![Build docker image](https://github.com/SmartSeminarian/front-end/actions/workflows/on-push-main.yml/badge.svg)](https://github.com/SmartSeminarian/front-end/actions/workflows/on-push-main.yml)
+
 This repository describes the frontend of the smart seminarian. The Wireframe and UI/UX Design of the frontend can be found here on [Figma](https://www.figma.com/design/3uktwiRfEoWQIdEwH75HTO/TEG-Workshop?node-id=0-1&t=JH0tdJCOj7aV535k-1). 
 
 ## Figma Design
