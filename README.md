@@ -1,4 +1,4 @@
-# Frontend
+# Smart Seminarian Frontend
 
 [![Build docker image](https://github.com/SmartSeminarian/front-end/actions/workflows/on-push-main.yml/badge.svg)](https://github.com/SmartSeminarian/front-end/actions/workflows/on-push-main.yml)
 
