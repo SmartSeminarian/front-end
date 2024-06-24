@@ -40,7 +40,7 @@ The Design Files on Figma are structured as followed:
     - **Vite Integration**: SvelteKit uses Vite, which provides a modern development experience with hot module replacement and fast builds.
     - **Built-In State Management**: Svelte's built-in stores simplify state management.
 
-## Tools for UI Automation Testing
+## Tools for UI Automation Testing (TBD)
 
 1. **[Cypress](https://www.cypress.io/)**:
    - **Overview**: Cypress is a JavaScript-based end-to-end testing framework tailored for modern web applications, including those built with Svelte.
