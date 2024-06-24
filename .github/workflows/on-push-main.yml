@@ -4,6 +4,7 @@ on:
   push:
     branches:
         - 'main'
+        - 'stage'
         - 'cicd-workflow'
 jobs:
   push_to_registry:
@@ -46,7 +47,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: krinkin/seminarian.${{github.event.repository.name}}:${{ env.branch }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Ping CI/CD to deploy
