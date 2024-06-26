@@ -1,5 +1,6 @@
 <!-- src/routes/+page.svelte -->
 <script>
+import Navbar from "@/components/Navbar.svelte";
 </script>
 
 <style>
@@ -23,6 +24,7 @@
     }
 </style>
 
+<Navbar />
 <div class="container">
     <h1>Welcome to Our Site</h1>
     <a href="/signup">Sign Up</a>
