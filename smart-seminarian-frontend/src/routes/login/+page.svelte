@@ -4,50 +4,26 @@
     import { Label } from "$lib/components/ui/label/index.js";
     import { onMount } from 'svelte';
     import { createEventDispatcher } from 'svelte';
-
-    let username = '';
-    let password = '';
-    let errorMessage = '';
-    let showErrorModal = false;
+    import { signIn } from "@auth/sveltekit/client";
+    import { page } from "$app/stores";
+    import { goto } from '$app/navigation';
 
     const dispatcher = createEventDispatcher();
 
-    const handleLogin = async () => {
-        try {
-            const response = await fetch('http://localhost:5000/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                })
+    // Function to check session and redirect if logged in
+    const checkSessionAndRedirect = () => {
+        onMount(() => {
+            const unsubscribe = page.subscribe($page => {
+                if ($page.data.session) {
+                    goto('/dashboard');  // Change this to your dashboard route
+                }
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Login successful:', data);
-                // Handle successful login (e.g., save token, redirect)
-            } else {
-                const errorData = await response.json();
-                errorMessage = errorData.message || 'Invalid username or password';
-                showErrorModal = true;
-            }
-        } catch (error) {
-            errorMessage = 'Server is not available. Please try again later.';
-            showErrorModal = true;
-        }
+            return () => unsubscribe();
+        });
     };
 
-    const onSubmit = (event: SubmitEvent) => {
-        event.preventDefault();
-        handleLogin();
-    };
-
-    const closeModal = () => {
-        showErrorModal = false;
-    };
+    checkSessionAndRedirect();
 </script>
 
 <style>
@@ -81,10 +57,10 @@
                     Enter your username below to login to your account
                 </p>
             </div>
-            <form on:submit={onSubmit} class="grid gap-4">
+            <form class="grid gap-4">
                 <div class="grid gap-2">
                     <Label for="username">Username</Label>
-                    <Input id="username" type="text" bind:value={username} placeholder="Username" required />
+                    <Input id="username" type="text" placeholder="Username" required />
                 </div>
                 <div class="grid gap-2">
                     <div class="flex items-center">
@@ -93,10 +69,10 @@
                             Forgot your password?
                         </a>
                     </div>
-                    <Input id="password" type="password" bind:value={password} required />
+                    <Input id="password" type="password" required />
                 </div>
                 <Button type="submit" class="w-full">Login</Button>
-                <Button variant="outline" class="w-full">Login with Github</Button>
+                <Button on:click={() => signIn("github")} variant="outline" class="w-full">Login with Github</Button>
             </form>
             <div class="mt-4 text-center text-sm">
                 Don&apos;t have an account?
@@ -108,12 +84,3 @@
         <!-- This div now has a blue background -->
     </div>
 </div>
-
-{#if showErrorModal}
-    <div class="modal-overlay" on:click={closeModal}></div>
-    <div class="modal">
-        <h2>Error</h2>
-        <p>{errorMessage}</p>
-        <Button on:click={closeModal}>Close</Button>
-    </div>
-{/if}

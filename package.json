@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@auth/sveltekit": "^1.4.1",
     "@splinetool/loader": "^1.7.8"
   }
 }

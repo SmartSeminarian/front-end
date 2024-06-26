@@ -18,6 +18,27 @@
     import * as Sheet from "$lib/components/ui/sheet/index.js";
     import * as Table from "$lib/components/ui/table/index.js";
     import Navbar from "$lib/components/Navbar.svelte";
+    import { signOut } from "@auth/sveltekit/client";
+    import { goto } from '$app/navigation';
+    import {page} from "$app/stores";
+    import {createEventDispatcher, onMount} from "svelte";
+
+    const dispatcher = createEventDispatcher();
+
+    // Function to check session and redirect if logged in
+    const checkSessionAndRedirect = () => {
+        onMount(() => {
+            const unsubscribe = page.subscribe($page => {
+                if (!$page.data.session) {
+                    goto('/');  // Change this to your dashboard route
+                }
+            });
+
+            return () => unsubscribe();
+        });
+    };
+
+    checkSessionAndRedirect();
 </script>
 
 <div class="flex min-h-screen w-full flex-col">

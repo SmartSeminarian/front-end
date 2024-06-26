@@ -12,6 +12,7 @@
     import * as Sheet from "$lib/components/ui/sheet/index.js";
     import { Input } from "$lib/components/ui/input/index.js";
     import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+    import {signOut} from "@auth/sveltekit/client";
 
     let currentPath = '';
 
@@ -84,17 +85,32 @@
         <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild let:builder>
                 <Button builders={[builder]} variant="secondary" size="icon" class="rounded-full">
-                    <CircleUser class="h-5 w-5" />
+                    {#if $page.data.session?.user?.image}
+                        <img
+                                src={$page.data.session.user.image}
+                                alt="User Profile"
+                                class="w-10 h-10 rounded-full"
+                        />
+                    {:else}
+                        <CircleUser class="h-5 w-5" />
+                    {/if}
                     <span class="sr-only">Toggle user menu</span>
                 </Button>
             </DropdownMenu.Trigger>
+
             <DropdownMenu.Content align="end">
-                <DropdownMenu.Label>My Account</DropdownMenu.Label>
+                <DropdownMenu.Label>
+                    {#if $page.data.session}
+                        {$page.data.session.user?.name}
+                    {:else}
+                        My Account
+                    {/if}
+                </DropdownMenu.Label>
                 <DropdownMenu.Separator />
                 <DropdownMenu.Item>Settings</DropdownMenu.Item>
                 <DropdownMenu.Item>Support</DropdownMenu.Item>
                 <DropdownMenu.Separator />
-                <DropdownMenu.Item>Logout</DropdownMenu.Item>
+                <DropdownMenu.Item on:click={() => signOut()}>Logout</DropdownMenu.Item>
             </DropdownMenu.Content>
         </DropdownMenu.Root>
     </div>

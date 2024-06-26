@@ -1,12 +1,30 @@
-
 <script lang="ts">
     import { Button } from "$lib/components/ui/button/index.js";
     import { Input } from "$lib/components/ui/input/index.js";
     import { Label } from "$lib/components/ui/label/index.js";
     import * as Card from "$lib/components/ui/card/index.js";
+    import {signIn, signOut} from "@auth/sveltekit/client";
+    import {page} from "$app/stores"
+    import { goto } from '$app/navigation';
+    import {createEventDispatcher, onMount} from "svelte";
 
+    const dispatcher = createEventDispatcher();
+
+    // Function to check session and redirect if logged in
+    const checkSessionAndRedirect = () => {
+        onMount(() => {
+            const unsubscribe = page.subscribe($page => {
+                if ($page.data.session) {
+                    goto('/dashboard');  // Change this to your dashboard route
+                }
+            });
+
+            return () => unsubscribe();
+        });
+    };
+
+    checkSessionAndRedirect();
 </script>
-
 
 <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
     <div class="flex items-center justify-center py-12">
@@ -36,7 +54,7 @@
                         <Input id="password" type="password" />
                     </div>
                     <Button type="submit" class="w-full">Create an account</Button>
-                    <Button variant="outline" class="w-full">Sign up with GitHub</Button>
+                    <Button on:click={() => signIn("github")} variant="outline" class="w-full">Sign up with GitHub</Button>
                 </div>
                 <div class="mt-4 text-center text-sm">
                     Already have an account?
@@ -49,7 +67,3 @@
         <!-- This div now has a blue background -->
     </div>
 </div>
-
-
-
-
