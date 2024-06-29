@@ -3,14 +3,30 @@ version: '3.9'
 services:
     service:
         container_name: $CONTAINER_NAME
-        build:
-          context: .
-          dockerfile: ./Dockerfile
+        image: krinkin/$PROJECT.$SERVICE_NAME:$BRANCH
+#UNCOMMENT_ME_FOR_DEV        build:
+#UNCOMMENT_ME_FOR_DEV          context: .
+#UNCOMMENT_ME_FOR_DEV          dockerfile: ./Dockerfile
         ports:
-            - "5173:5173"
+            - "5173"
         env_file:
             - ./.env
         volumes:
             - $CONTAINER_DATA:/data
             - $VERSION_FILE:/VERSION:ro
 #UNCOMMENT_ME_FOR_DEV            - ./app:/smart-seminarian-frontend:ro
+#DELETE_BLOCK_FOR_DEV
+    tunnel:
+        container_name:  ${CONTAINER_NAME}_tunnel
+        depends_on:
+            -   service
+        env_file:
+            - ./.env
+        image: cloudflare/cloudflared:latest
+        command: [ "tunnel",
+                   "--no-autoupdate",
+                   "run",
+                   "--token",
+                   "$CF_TOKEN"
+        ]
+#DELETE_BLOCK_FOR_DEV
