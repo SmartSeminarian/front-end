@@ -8,13 +8,14 @@ services:
 #UNCOMMENT_ME_FOR_DEV          context: .
 #UNCOMMENT_ME_FOR_DEV          dockerfile: ./Dockerfile
         ports:
-            - "5173"
+            - "5000"
         env_file:
             - ./.env
         volumes:
             - $CONTAINER_DATA:/data
             - $VERSION_FILE:/VERSION:ro
-#UNCOMMENT_ME_FOR_DEV            - ./app:/smart-seminarian-frontend:ro
+#UNCOMMENT_ME_FOR_DEV            - ./smart-seminarian-frontend:/smart-seminarian-frontend:ro
+
 #DELETE_BLOCK_FOR_DEV
     tunnel:
         container_name:  ${CONTAINER_NAME}_tunnel

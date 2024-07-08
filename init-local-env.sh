@@ -41,10 +41,19 @@ echo "CONTAINER_DATA=./.data/"  >> ./.env
 echo "VERSION_FILE=$VERSION_FILE"  >> ./.env
 echo "Version: $BRANCH `hostname` `date`" > $VERSION_FILE
 
+read -p "Enter AUTH_GITHUB_ID: " AUTH_GITHUB_ID
+read -p "Enter AUTH_GITHUB_SECRET: " AUTH_GITHUB_SECRET 
+
+AUTH_SECRET="$AUTH_GITHUB_SECRET"
+
+echo "AUTH_GITHUB_ID=$AUTH_GITHUB_ID" >> ./.env
+echo "AUTH_GITHUB_SECRET=$AUTH_GITHUB_SECRET" >> ./.env
+echo "AUTH_SECRET=$AUTH_SECRET" >> ./.env
+
 cat ./.env
 mkdir -p ./.data/
 cp ./deploy/docker-compose.yml ./docker-compose.yml
 sed -i "s/^#UNCOMMENT_ME_FOR_DEV//" ./docker-compose.yml
-sed -i "s/5173/5173:5173/" ./docker-compose.yml
+sed -i "s/5000/5000:5000/" ./docker-compose.yml
 sed -i "s/^        image: krinkin\/\$PROJECT\.\$SERVICE_NAME:\$BRANCH//" ./docker-compose.yml
 sed -i "/#DELETE_BLOCK_FOR_DEV/,/#DELETE_BLOCK_FOR_DEV/d" ./docker-compose.yml
