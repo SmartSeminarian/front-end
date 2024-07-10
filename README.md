@@ -60,6 +60,14 @@ npm run dev
 npm run dev -- --open
 ```
 
+
+## Testing 
+To run the tests simply run the following command: 
+
+```
+npm test 
+```
+
 ## Building
 
 To create a production version of your app:
