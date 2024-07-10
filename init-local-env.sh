@@ -50,6 +50,8 @@ echo "AUTH_GITHUB_ID=$AUTH_GITHUB_ID" >> ./.env
 echo "AUTH_GITHUB_SECRET=$AUTH_GITHUB_SECRET" >> ./.env
 echo "AUTH_SECRET=$AUTH_SECRET" >> ./.env
 
+cp ./.env ./smart-seminarian-frontend/.env
+
 cat ./.env
 mkdir -p ./.data/
 cp ./deploy/docker-compose.yml ./docker-compose.yml
