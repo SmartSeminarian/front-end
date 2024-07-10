@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "@auth/sveltekit": "^1.4.1",
-    "@splinetool/loader": "^1.7.8",
-    "@testing-library/user-event": "^14.5.2"
+    "@splinetool/loader": "^1.7.8"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.7",
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/svelte": "^5.2.0",
+    "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.12",
     "@vitest/ui": "^2.0.1",
     "babel-jest": "^29.7.0",
