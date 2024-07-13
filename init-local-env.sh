@@ -41,7 +41,22 @@ echo "CONTAINER_DATA=./.data/"  >> ./.env
 echo "VERSION_FILE=$VERSION_FILE"  >> ./.env
 echo "Version: $BRANCH `hostname` `date`" > $VERSION_FILE
 
+read -p "Enter AUTH_GITHUB_ID: " AUTH_GITHUB_ID
+read -p "Enter AUTH_GITHUB_SECRET: " AUTH_GITHUB_SECRET 
+
+AUTH_SECRET="$AUTH_GITHUB_SECRET"
+
+echo "AUTH_GITHUB_ID=$AUTH_GITHUB_ID" >> ./.env
+echo "AUTH_GITHUB_SECRET=$AUTH_GITHUB_SECRET" >> ./.env
+echo "AUTH_SECRET=$AUTH_SECRET" >> ./.env
+
+cp ./.env ./smart-seminarian-frontend/.env
+
 cat ./.env
 mkdir -p ./.data/
 cp ./deploy/docker-compose.yml ./docker-compose.yml
-sed "s/^#UNCOMMENT_ME_FOR_DEV//" ./deploy/docker-compose.yml > ./docker-compose.yml
+sed -i "s/^#UNCOMMENT_ME_FOR_DEV//" ./docker-compose.yml
+sed -i '0,/5000/s/5000/5000:5000/' ./docker-compose.yml
+sed -i "s/^            test: curl --fail https:\/\/seminarian-stage.csai.site\/ || exit 1//" ./docker-compose.yml
+sed -i "s/^        image: krinkin\/\$PROJECT\.\$SERVICE_NAME:\$BRANCH//" ./docker-compose.yml
+sed -i "/#DELETE_BLOCK_FOR_DEV/,/#DELETE_BLOCK_FOR_DEV/d" ./docker-compose.yml

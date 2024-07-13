@@ -15,6 +15,16 @@ const config: Config = {
 		},
 		extend: {
 			colors: {
+				ssLightestGray: "#F0F3F6",
+				ssAccentLighter: "#93C0EC",
+				ssMiddleGray: "#AEB5BD",
+				ssAccentColor: "#3595F5",
+				ssAccentLightest: "#C2D8EF",
+				ssRed: "#FA617D",
+				ssGreen: "#35A76A",
+				ssOrange: "#FFCA41",
+				ssLightGray: "#CCD7E2",
+				ssGray: "#87929D",
 				border: "hsl(var(--border) / <alpha-value>)",
 				input: "hsl(var(--input) / <alpha-value>)",
 				ring: "hsl(var(--ring) / <alpha-value>)",
@@ -55,7 +65,7 @@ const config: Config = {
 				sm: "calc(var(--radius) - 4px)"
 			},
 			fontFamily: {
-				sans: [...fontFamily.sans]
+				sans: ["Montserrat", ...fontFamily.sans]
 			}
 		}
 	},

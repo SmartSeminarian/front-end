@@ -2,10 +2,12 @@ FROM node:18
 
 WORKDIR /app
 
-COPY ./smart-seminarian-frontend /app/
+COPY ./ /app/
 
-RUN npm install
+RUN apt-get update && apt-get install -y curl
 
-EXPOSE 5173
+RUN cd smart-seminarian-frontend && npm install
 
-ENTRYPOINT /app/entrypoint.sh
+EXPOSE 5000
+
+ENTRYPOINT /app/smart-seminarian-frontend/entrypoint.sh

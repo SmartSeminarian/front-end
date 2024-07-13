@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /app
+cd /app/smart-seminarian-frontend
 
 npm run dev -- --host --port 5000
 
