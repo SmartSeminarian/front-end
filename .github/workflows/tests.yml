@@ -1,0 +1,29 @@
+name: UI-testing
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
+      - 'stage'
+      - 'ui-testing'
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install packages and run tests
+        shell: bash
+        run: |
+          npm install
+          cd smart-seminarian-frontend
+          npm install
+          npm test
