@@ -20,7 +20,7 @@
                 'const lastName = "Seminarian";\n' +
                 '\n' +
                 'const fullName = firstName + " " + lastName;\n' +
-                'console.log("Hello, " + fullName); // Output: "John Doe"\n',
+                'console.log("Hello, " + fullName); // Output: "Hello, Smart Seminarian"\n',
             language: 'javascript',
             theme: 'vs-dark'
         });
