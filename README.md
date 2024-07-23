@@ -63,15 +63,13 @@ npm run dev -- --open
 ## Developing (Docker)
 
 ```
-# Add Commands for developing in docker 
-# ./init-local-env.sh
-# ./build-local-image.sh
+# Initialize envivonment variables
+./init-local-env.sh
 ```
-
 ```
-docker compose up
+# Start containers
+docker compose up --build
 ```
-
 
 ## Testing 
 To run the tests simply run the following command: 
