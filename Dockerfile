@@ -2,7 +2,7 @@ FROM node:18
 
 WORKDIR /app
 
-COPY ./ /app/
+COPY ./app/ /app/
 
 RUN apt-get update && apt-get install -y curl
 
