@@ -49,7 +49,7 @@ AUTH_GITHUB_SECRET=<Github Client Secret>
 AUTH_SECRET=<32 Char Long Random String>
 ```
 
-## Developing
+## Developing (locally)
 
 Once you've installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
@@ -60,6 +60,16 @@ npm run dev
 npm run dev -- --open
 ```
 
+## Developing (Docker)
+
+```
+# Initialize envivonment variables
+./init-local-env.sh
+```
+```
+# Start containers
+docker compose up --build
+```
 
 ## Testing 
 To run the tests simply run the following command: 
