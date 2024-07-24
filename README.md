@@ -40,7 +40,7 @@ How to find the GitHub Token
 
 1. Go to your GitHub account > Settings > Developer Settings > OAuth Apps > New OAuth App then create a new App
 2. For the Homepage URL: http://localhost:5173/ (or do http://localhost:5000 if you test with docker)
-3. For the Authorization Callback URL: http://localhost:5173/auth/callback/github (or do http://localhost:5000 if you test with docker)
+3. For the Authorization Callback URL: http://localhost:5173/auth/callback/github (or do http://localhost:5000/auth/callback/github if you test with docker)
 4. You will need to generate a random 32 characters long string like this AUTH_SECRET="a9c344fe92e712c3b8bc584a04376a8d" (for that you can just call https://generate-secret.vercel.app/32 and take the string that is generated there)
 
 ```
