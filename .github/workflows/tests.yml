@@ -21,6 +21,6 @@ jobs:
         shell: bash
         run: |
           npm install
-          cd smart-seminarian-frontend
+          cd app
           npm install
           npm test
