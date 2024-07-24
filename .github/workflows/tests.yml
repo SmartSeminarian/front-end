@@ -1,12 +1,9 @@
 name: UI-testing
 
 on:
-  pull_request:
-  push:
-    branches:
-      - 'main'
-      - 'stage'
-      - 'ui-testing'
+  repository_dispatch:
+    types:
+      - stage-deploy
 
 jobs:
   tests:
