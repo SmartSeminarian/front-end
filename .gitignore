@@ -17,7 +17,7 @@ coverage/
 *.lcov
 
 # environment variables
-.env
+smart-seminarian-frontend/.env
 .env.*.local
 
 # logs
@@ -64,7 +64,7 @@ $RECYCLE.BIN/
 static/
 
 /package
-.env
+smart-seminarian-frontend/.env
 .env.*
 !.env.example
 vite.config.js.timestamp-*
