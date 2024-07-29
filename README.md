@@ -47,6 +47,9 @@ How to find the GitHub Token
 AUTH_GITHUB_ID=<Github Client ID>
 AUTH_GITHUB_SECRET=<Github Client Secret>
 AUTH_SECRET=<32 Char Long Random String>
+SEMINARIAN_STAGE_API_URL=https://api-stage.csai.site/
+SEMINARIAN_API_URL=<The API URL> (for me it is this: http://localhost:5050/) 
+SEMINARIAN_API_TOKEN=<API Token from our api> (f.e.: test:VongOahophufshepwucsimyig5ogukir)
 ```
 
 ## Developing (locally)

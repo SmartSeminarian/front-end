@@ -1,32 +1,58 @@
 <!-- src/routes/+page.svelte -->
 <script lang="ts">
-import Navbar from "@/components/Navbar.svelte";
-import {signIn, signOut} from "@auth/sveltekit/client";
-import {page} from "$app/stores"
-console.log($page.data.session)
+    import Navbar from "@/components/Navbar.svelte";
+    import { signIn, signOut } from "@auth/sveltekit/client";
+    import { page } from "$app/stores";
+    import { onMount } from "svelte";
+
+    let sessionId = "user not logged in";
+
+    onMount(async () => {
+        const session = $page.data.session;
+        if (session) {
+            try {
+                const response = await fetch('http://localhost:5050/login', {
+                    method: 'POST',
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        github_username: session.user?.name,
+                        token: 'test:VongOahophufshepwucsimyig5ogukir'
+                    })
+                });
+
+                const data = await response.json();
+                //console.log(data);
+                sessionId = data['session_id'] || "No Session ID returned";
+                //console.log(sessionId);
+            } catch (error) {
+                console.error("Error fetching session ID:", error);
+                sessionId = "Error fetching session ID";
+            }
+        }
+    });
 </script>
 
-<Navbar/>
+<Navbar />
 <div class="p-24">
     {#if $page.data.session}
         <h1>You are logged in</h1>
         {#if $page.data.session.user?.image}
-            <img
-                    src={$page.data.session.user?.image}
-                    alt="User Profile"
-                    class="w-12 h-12"
-                >
+            <img src={$page.data.session.user?.image} alt="User Profile" class="w-12 h-12">
         {/if}
         <p>Signed in as {$page.data.session.user?.name}</p>
         <p>Your email is {$page.data.session.user?.email}</p>
         <p>Your Session expires {$page.data.session.expires}</p>
+        <p>Seminarian-Session-ID: {sessionId}</p>
         <button on:click={() => signOut()} class="bg-blue-500 py-1 px-2 text-white font-bold">Sign out</button>
-
     {:else}
         <h1>You are not logged in</h1>
         <h1>Welcome to Our Site</h1>
         <a href="/signup">Sign Up</a>
         <a href="/login">Log In</a>
+        <p>Seminarian-Session-ID: {sessionId}</p>
     {/if}
 </div>
 
@@ -50,4 +76,3 @@ console.log($page.data.session)
         background-color: #005bb5;
     }
 </style>
-

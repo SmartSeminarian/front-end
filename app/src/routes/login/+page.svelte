@@ -15,7 +15,7 @@
         onMount(() => {
             const unsubscribe = page.subscribe($page => {
                 if ($page.data.session) {
-                    goto('/dashboard');  // Change this to your dashboard route
+                    goto('/dashboard');
                 }
             });
 
