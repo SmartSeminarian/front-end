@@ -1,36 +1,44 @@
-<!-- src/routes/+page.svelte -->
 <script lang="ts">
-    import Navbar from "@/components/Navbar.svelte";
+    import Navbar from "$lib/components/Navbar.svelte";
     import { signIn, signOut } from "@auth/sveltekit/client";
-    import { page } from "$app/stores";
+    import { page } from '$app/stores';
     import { onMount } from "svelte";
+    import { setCookie, getCookie, deleteCookie } from '$lib/cookies';
 
-    let sessionId = "user not logged in";
+    let sessionId: string | null = "lala";
 
-    onMount(async () => {
+    onMount(() => {
+        sessionId = getCookie('sessionID');
+
         const session = $page.data.session;
         if (session) {
-            try {
-                const response = await fetch('http://localhost:5050/login', {
-                    method: 'POST',
-                    headers: {
-                        'accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        github_username: session.user?.name,
-                        token: 'test:VongOahophufshepwucsimyig5ogukir'
-                    })
+            fetch('http://localhost:5050/login', {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    github_username: session.user?.name,
+                    token: 'test:VongOahophufshepwucsimyig5ogukir'
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    sessionId = data['session_id'] || "No Session ID returned";
+                    if (sessionId != null) {
+                        setCookie('sessionID', sessionId, 7); // Cookie expires in 7 days
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching session ID:", error);
+                    sessionId = "Error fetching session ID";
                 });
-
-                const data = await response.json();
-                //console.log(data);
-                sessionId = data['session_id'] || "No Session ID returned";
-                //console.log(sessionId);
-            } catch (error) {
-                console.error("Error fetching session ID:", error);
-                sessionId = "Error fetching session ID";
-            }
         }
     });
 </script>
