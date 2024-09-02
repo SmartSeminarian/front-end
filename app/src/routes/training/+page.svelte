@@ -74,15 +74,7 @@
 </div>
 
 <style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: white;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
+
 
     .container {
         display: flex;

@@ -3,12 +3,12 @@
 import Navbar from "@/components/Navbar.svelte";
 import {signIn, signOut} from "@auth/sveltekit/client";
 import {page} from "$app/stores"
-console.log($page.data.session)
+console.log($page.data?.session);
 </script>
 
 <Navbar/>
 <div class="p-24">
-    {#if $page.data.session}
+    {#if $page.data?.session}
         <h1>You are logged in</h1>
         {#if $page.data.session.user?.image}
             <img
