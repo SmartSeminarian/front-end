@@ -69,3 +69,4 @@ smart-seminarian-frontend/.env
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+.env
