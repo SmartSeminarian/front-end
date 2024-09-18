@@ -17,14 +17,16 @@ const config: Config = {
 			colors: {
 				ssLightestGray: "#F2F5F8",    // Slightly adjusted for a cleaner look
 				ssAccentLighter: "#b784d9",   // Slightly brighter for better readability
-				ssMiddleGray: "#a2a0b0",      // Slightly lighter for a more neutral tone
+				ssMiddleGray: "#cfced9",      // Slightly lighter for a more neutral tone
 				ssAccentColor: "#5E3B75",     // Keeping the accent color unchanged as requested
 				ssAccentLightest: "#f9f0ff",  // Lightened to give a softer background effect
 				ssRed: "#F85D70",             // Slightly softer red for better contrast
 				ssGreen: "#3BBF7D",           // Adjusted to a brighter green for more vibrancy
 				ssOrange: "#FFC857",          // A bit more vibrant orange for better visibility
 				ssLightGray: "#D1D9E1",       // Slightly lighter for a cleaner look
-				ssGray: "#8A97A3",            // Slightly darker for better contrast
+				ssGray: "#5b5a66",            // Slightly darker for better contrast
+				ssDarkGray: "#383642",            // Slightly darker for better contrast
+
 				border: "hsl(var(--border) / <alpha-value>)",
 				input: "hsl(var(--input) / <alpha-value>)",
 				ring: "hsl(var(--ring) / <alpha-value>)",

@@ -107,7 +107,9 @@
                     {/if}
                 </DropdownMenu.Label>
                 <DropdownMenu.Separator />
-                <DropdownMenu.Item>Settings</DropdownMenu.Item>
+                <DropdownMenu.Item>
+                    <a href="/settings" class="nav-link"> Settings </a>
+                </DropdownMenu.Item>
                 <DropdownMenu.Item>Support</DropdownMenu.Item>
                 <DropdownMenu.Separator />
                 <DropdownMenu.Item on:click={() => signOut()}>Logout</DropdownMenu.Item>
