@@ -23,3 +23,4 @@
 
 <Navbar/>
 <p>UI Version: {version}</p>
+
