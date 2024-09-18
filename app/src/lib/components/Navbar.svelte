@@ -60,8 +60,8 @@
         <a href="/dashboard" class="nav-link {isActive('/dashboard')}">
             Smart Seminarian
         </a>
-        <a href="/courses" class="nav-link {isActive('/courses')}">
-            Courses
+        <a href="/concepts" class="nav-link {isActive('/concepts')}">
+            Concepts
         </a>
         <a href="/training" class="nav-link {isActive('/training')}">
             Training
@@ -85,7 +85,7 @@
                     <span class="sr-only">Acme Inc</span>
                 </a>
                 <a href="/dashboard" class="nav-link {isActive('/dashboard')}"> Dashboard </a>
-                <a href="/courses" class="nav-link {isActive('/courses')}"> Courses </a>
+                <a href="/concepts" class="nav-link {isActive('/concepts')}"> Concepts </a>
                 <a href="/training" class="nav-link {isActive('/training')}"> Training </a>
                 <a href="/feedback" class="nav-link {isActive('/feedback')}"> Feedback </a>
             </nav>
