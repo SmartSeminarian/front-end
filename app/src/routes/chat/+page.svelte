@@ -3,7 +3,6 @@
     import { writable } from "svelte/store";
     import { getCookie } from "@/cookies";
 
-    // Typedefinition
     interface Message {
         sender: string;
         content: string;
@@ -14,11 +13,13 @@
     let loading = writable(false);
     let apiDescription = writable('');
 
-    const API_URL = 'https://api-stage.csai.site/chat';
+    const API_URL = 'http://localhost:5050/chat';
 
-    // Function to send a message to the assistant
     async function sendMessage() {
-        if (!inputMessage.trim()) return;
+        if (!inputMessage.trim()) {
+            apiDescription.set('Message cannot be empty.');
+            return;
+        }
 
         const sessionId = getCookie('sessionID');
         if (!sessionId) {
@@ -30,10 +31,7 @@
 
         const payload = {
             message: inputMessage,
-            context: {
-                type: 'problem',
-                id: sessionId,
-            },
+            context: {},
         };
 
         inputMessage = '';
@@ -43,22 +41,23 @@
             const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
+                    'accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Session-ID': sessionId,
+                    'X-Session-ID': sessionId,
                 },
+                mode: 'cors',
                 body: JSON.stringify(payload),
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                messages.update((msgs) => [...msgs, { sender: 'assistant', content: data.response }]);
-            } else {
-                messages.update((msgs) => [
-                    ...msgs,
-                    { sender: 'assistant', content: 'Error fetching response from assistant.' },
-                ]);
+            if (!response.ok) {
+                throw new Error(`Error fetching assistant response: ${response.statusText}`);
             }
+
+            const data = await response.json();
+            messages.update((msgs) => [...msgs, { sender: 'assistant', content: data.assistant_response }]);
+
         } catch (error) {
+            console.error('Error:', error);
             messages.update((msgs) => [
                 ...msgs,
                 { sender: 'assistant', content: 'Failed to reach assistant.' },
@@ -68,6 +67,7 @@
         }
     }
 </script>
+
 
 <style>
     .container {
