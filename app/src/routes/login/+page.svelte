@@ -1,86 +1,123 @@
 <script lang="ts">
     import { Button } from "$lib/components/ui/button/index.js";
-    import { Input } from "$lib/components/ui/input/index.js";
-    import { Label } from "$lib/components/ui/label/index.js";
-    import { onMount } from 'svelte';
-    import { createEventDispatcher } from 'svelte';
     import { signIn } from "@auth/sveltekit/client";
-    import { page } from "$app/stores";
-    import { goto } from '$app/navigation';
+    import { Github, Loader2 } from 'lucide-svelte';
 
-    const dispatcher = createEventDispatcher();
+    let isLoading = false;
 
-    // Function to check session and redirect if logged in
-    const checkSessionAndRedirect = () => {
-        onMount(() => {
-            const unsubscribe = page.subscribe($page => {
-                if ($page.data.session) {
-                    goto('/dashboard');
-                }
-            });
+    // List of quotes
+    const quotes = [
+        {
+            text: "Controlling complexity is the essence of computer programming.",
+            author: "Brian Kernighan"
+        },
+        {
+            text: "The best way to learn is to do; the worst way to teach is to talk.",
+            author: "Donald Knuth"
+        },
+        {
+            text: "Computer science is no more about computers than astronomy is about telescopes.",
+            author: "Edsger Dijkstra"
+        },
+        {
+            text: "He who refuses to do arithmetic is doomed to talk nonsense.",
+            author: "John McCarthy"
+        },
+        {
+            text: "Simplicity is prerequisite for reliability.",
+            author: "Edsger Dijkstra"
+        },
+        {
+            text: "Programs must be written for people to read, and only incidentally for machines to execute.",
+            author: "Harold Abelson"
+        },
+        {
+            text: "The purpose of computing is insight, not numbers.",
+            author: "Richard Hamming"
+        },
+        {
+            text: "Premature optimization is the root of all evil.",
+            author: "Donald Knuth"
+        },
+        {
+            text: "Learning to write programs stretches your mind, and helps you think better.",
+            author: "Bill Gates"
+        },
+        {
+            text: "The best way to predict the future is to invent it.",
+            author: "Alan Kay"
+        }
+    ];
 
-            return () => unsubscribe();
-        });
-    };
+    // Randomly select a quote
+    let selectedQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
-    checkSessionAndRedirect();
+    async function handleSignIn() {
+        isLoading = true;
+        await signIn("github");
+        isLoading = false;
+    }
 </script>
 
-<style>
-    .modal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 2rem;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-    }
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-    }
-</style>
+<!-- Full-page layout, no scrolling -->
+<div class="container relative h-screen flex items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+    <!-- Login button in the top-right corner -->
+    <Button href="/examples/authentication" variant="ghost" class="absolute right-4 top-4 md:right-8 md:top-8">
+        Login
+    </Button>
 
-<div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-    <div class="flex items-center justify-center py-12">
-        <div class="mx-auto grid w-[350px] gap-6">
-            <div class="grid gap-2 text-center">
-                <h1 class="text-3xl font-bold">Login</h1>
-                <p class="text-balance text-muted-foreground">
-                    Enter your username below to login to your account
+    <!-- Left side with background image and randomly selected quote -->
+    <div class="relative hidden h-full flex-col text-white lg:flex dark:border-r">
+        <div
+                class="absolute inset-0 bg-cover"
+                style="background-image: url(https://images.unsplash.com/photo-1637946175559-22c4fe13fc54?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGFic3RyYWN0JTIwJTIwZ2VvbWV0cmljJTIwZGFya3xlbnwwfHwwfHx8MA%3D%3D);"
+        />
+        <div class="relative z-20 p-10 text-lg font-medium">
+            Smart Seminarian
+        </div>
+        <div class="relative z-20 mt-auto p-10">
+            <blockquote class="space-y-2">
+                <p class="text-lg">
+                    &ldquo;{selectedQuote.text}&rdquo;
                 </p>
-            </div>
-            <form class="grid gap-4">
-                <div class="grid gap-2">
-                    <Label for="username">Username</Label>
-                    <Input id="username" type="text" placeholder="Username" required />
-                </div>
-                <div class="grid gap-2">
-                    <div class="flex items-center">
-                        <Label for="password">Password</Label>
-                        <a href="##" class="ml-auto inline-block text-sm underline">
-                            Forgot your password?
-                        </a>
-                    </div>
-                    <Input id="password" type="password" required />
-                </div>
-                <Button type="submit" class="w-full">Login</Button>
-                <Button on:click={() => signIn("github")} variant="outline" class="w-full">Login with Github</Button>
-            </form>
-            <div class="mt-4 text-center text-sm">
-                Don&apos;t have an account?
-                <a href="/signup" class="underline"> Sign up </a>
-            </div>
+                <footer class="text-sm">{selectedQuote.author}</footer>
+            </blockquote>
         </div>
     </div>
-    <div class="hidden lg:block bg-blue-200">
-        <!-- This div now has a blue background -->
+
+    <!-- Right side with GitHub login button -->
+    <div class="flex items-center justify-center p-8 h-full">
+        <div class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+            <div class="flex flex-col space-y-2 text-center">
+                <h1 class="text-2xl font-semibold tracking-tight">Login with GitHub</h1>
+                <p class="text-muted-foreground text-sm">
+                    Use your GitHub account to log in.
+                </p>
+            </div>
+
+            <!-- GitHub login button -->
+            <Button on:click={handleSignIn} variant="outline" class="w-full">
+                {#if isLoading}
+                    <Loader2 class="mr-2 h-4 w-4 animate-spin" />
+                    Loading...
+                {:else}
+                    <Github class="mr-2 h-4 w-4" />
+                    Login with GitHub
+                {/if}
+            </Button>
+
+            <!-- Terms of Service and Privacy Policy -->
+            <p class="text-muted-foreground px-8 text-center text-sm">
+                By logging in, you agree to our
+                <a href="/terms" class="hover:text-primary underline underline-offset-4">
+                    Terms of Service
+                </a>
+                and
+                <a href="/privacy" class="hover:text-primary underline underline-offset-4">
+                    Privacy Policy
+                </a>
+                .
+            </p>
+        </div>
     </div>
 </div>
