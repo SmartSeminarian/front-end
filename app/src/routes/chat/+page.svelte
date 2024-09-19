@@ -2,18 +2,72 @@
     import Navbar from "$lib/components/Navbar.svelte";
     import { writable } from "svelte/store";
     import { getCookie } from "@/cookies";
+    import { onMount, tick } from "svelte";
+    import * as Command from "$lib/components/ui/command/index.js";
+    import * as Popover from "$lib/components/ui/popover/index.js";
+    import { Button } from "$lib/components/ui/button/index.js";
+    import { PUBLIC_VITE_API_URL } from "$env/static/public";
 
     interface Message {
         sender: string;
         content: string;
     }
 
+    interface Concept {
+        id: string;
+        name: string;
+        description: string;
+        difficulty: number;
+    }
+
+    let concepts: Concept[] = [];
+
+    onMount(async () => {
+        const sessionId = getCookie('sessionID');
+        if (!sessionId) {
+            console.log("No session ID found");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${PUBLIC_VITE_API_URL}/concept`, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'X-Session-ID': sessionId
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch concepts');
+            }
+
+            concepts = await response.json() as Concept[];
+            concepts.sort((a, b) => a.difficulty - b.difficulty);
+        } catch (error) {
+            console.error('Error fetching concepts:', error);
+        }
+    });
+
     let messages = writable<Message[]>([]);
     let inputMessage = '';
     let loading = writable(false);
     let apiDescription = writable('');
 
-    const API_URL = 'http://localhost:5050/chat';
+    let open = false;
+    let value = "";
+    let selectedConcept: Concept | null = null;
+
+    $: selectedValue = concepts.find((f) => f.name === value)?.description ?? "Select a Concept";
+
+    function closeAndFocusTrigger(triggerId: string) {
+        open = false;
+        tick().then(() => {
+            document.getElementById(triggerId)?.focus();
+        });
+    }
+
+    const API_URL = `${PUBLIC_VITE_API_URL}/chat`;
 
     async function sendMessage() {
         if (!inputMessage.trim()) {
@@ -31,8 +85,15 @@
 
         const payload = {
             message: inputMessage,
-            context: {},
+            context: selectedConcept ? {
+                type: "problem",
+                id: selectedConcept.id
+            } : {}
         };
+
+        console.log(payload)
+        console.log(selectedConcept?.id)
+        console.log(selectedConcept?.name)
 
         inputMessage = '';
         loading.set(true);
@@ -67,7 +128,6 @@
         }
     }
 </script>
-
 
 <style>
     .container {
@@ -139,11 +199,16 @@
         background-color: #6c757d;
         cursor: not-allowed;
     }
+
+    .command-item {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
 
 <Navbar />
 <div class="container">
-
     <main class="flex flex-col gap-4">
         {#if $apiDescription}
             <div class="error-message" aria-live="polite">
@@ -179,6 +244,42 @@
             <button on:click={sendMessage} disabled={$loading}>
                 Send
             </button>
+
+            <!-- Popover for selecting concepts -->
+            <Popover.Root bind:open let:ids>
+                <Popover.Trigger asChild let:builder>
+                    <Button
+                            builders={[builder]}
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={open}
+                            class="w-[200px] justify-between"
+                    >
+                        {selectedValue}
+                    </Button>
+                </Popover.Trigger>
+                <Popover.Content class="w-[200px] p-0">
+                    <Command.Root>
+                        <Command.Input placeholder="Search concept..." class="h-9" />
+                        <Command.Empty>No concepts found.</Command.Empty>
+                        <Command.Group>
+                            {#each concepts as concept}
+                                <Command.Item
+                                        value={concept.name}
+                                        onSelect={(currentValue) => {
+                                        value = currentValue;
+                                        selectedConcept = concept;
+                                        closeAndFocusTrigger(ids.trigger);
+                                    }}
+                                        class="command-item"
+                                >
+                                    {concept.name}
+                                </Command.Item>
+                            {/each}
+                        </Command.Group>
+                    </Command.Root>
+                </Popover.Content>
+            </Popover.Root>
         </div>
     </main>
 </div>
