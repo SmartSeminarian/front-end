@@ -20,6 +20,22 @@
         currentPath = url.pathname;
     });
 
+
+    function deleteAllCookies() {
+        const cookies = document.cookie.split(';');
+        cookies.forEach((cookie) => {
+            const eqPos = cookie.indexOf('=');
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+        });
+    }
+
+    const handleSignOut = () => {
+        deleteAllCookies();
+        signOut();
+    };
+
+
     const isActive = (path: string) => currentPath === path ? 'active' : '';
 </script>
 
@@ -112,7 +128,7 @@
                 </DropdownMenu.Item>
                 <DropdownMenu.Item>Support</DropdownMenu.Item>
                 <DropdownMenu.Separator />
-                <DropdownMenu.Item on:click={() => signOut()}>Logout</DropdownMenu.Item>
+                <DropdownMenu.Item on:click={handleSignOut}>Logout</DropdownMenu.Item>
             </DropdownMenu.Content>
         </DropdownMenu.Root>
     </div>

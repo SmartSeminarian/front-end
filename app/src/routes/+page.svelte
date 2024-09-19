@@ -4,6 +4,9 @@
     import { page } from '$app/stores';
     import { onMount } from "svelte";
     import { setCookie, getCookie, deleteCookie } from '$lib/cookies';
+    import { PUBLIC_VITE_API_URL, PUBLIC_VITE_API_TOKEN} from "$env/static/public";
+
+    let sessionId: string | null = "No Session ID, You need to log in";
     import Activity from "lucide-svelte/icons/activity";
     import ArrowUpRight from "lucide-svelte/icons/arrow-up-right";
     import CircleUser from "lucide-svelte/icons/circle-user";
@@ -26,40 +29,53 @@
     // Access VITE_API_URL from environment variables
     const API_URL = import.meta.env.VITE_API_URL;
 
-    let sessionId: string | null = "lala";
+    function deleteAllCookies() {
+        const cookies = document.cookie.split(';');
+        cookies.forEach((cookie) => {
+            const eqPos = cookie.indexOf('=');
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+        });
+    }
 
+    const handleSignOut = () => {
+        deleteAllCookies();
+        signOut();
+    };
     onMount(() => {
         sessionId = getCookie('sessionID');
 
-        const session = $page.data.session;
-        if (session) {
-            fetch(`${API_URL}/login`, {
-                method: 'POST',
-                headers: {
-                    'accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    github_username: session.user?.name,
-                    token: 'test:VongOahophufshepwucsimyig5ogukir'
+        if (!sessionId) {
+            const session = $page.data.session;
+            if (session) {
+                fetch(`${PUBLIC_VITE_API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        github_username: session.user?.name,
+                        token: PUBLIC_VITE_API_TOKEN
+                    })
                 })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    sessionId = data['session_id'] || "No Session ID returned";
-                    if (sessionId != null) {
-                        setCookie('sessionID', sessionId, 7); // Cookie expires in 7 days
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching session ID:", error);
-                    sessionId = "Error fetching session ID";
-                });
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        sessionId = data['session_id'] || "No Session ID returned";
+                        if (sessionId != null) {
+                            setCookie('sessionID', sessionId, 7); // Cookie expires in 7 days
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching session ID:", error);
+                        sessionId = "Error fetching session ID";
+                    });
+            }
         }
     });
 </script>
