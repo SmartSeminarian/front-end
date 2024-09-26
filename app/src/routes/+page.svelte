@@ -12,7 +12,7 @@
 
         const session = $page.data.session;
         if (session) {
-            fetch('http://localhost:5050/login', {
+            fetch('https://api-stage.csai.site//login', {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
