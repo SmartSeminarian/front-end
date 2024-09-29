@@ -17,7 +17,6 @@ You need to have installed the following:
 - npm 
 - docker
 
-
 ## Installation
 
 How to install the project: 
