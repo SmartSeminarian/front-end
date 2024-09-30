@@ -4,41 +4,58 @@
     import { page } from '$app/stores';
     import { onMount } from "svelte";
     import { setCookie, getCookie, deleteCookie } from '$lib/cookies';
+    import { PUBLIC_VITE_API_URL, PUBLIC_VITE_API_TOKEN} from "$env/static/public";
 
-    let sessionId: string | null = "lala";
+    let sessionId: string | null = "No Session ID, You need to log in";
+
+    function deleteAllCookies() {
+        const cookies = document.cookie.split(';');
+        cookies.forEach((cookie) => {
+            const eqPos = cookie.indexOf('=');
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+        });
+    }
+
+    const handleSignOut = () => {
+        deleteAllCookies();
+        signOut();
+    };
 
     onMount(() => {
         sessionId = getCookie('sessionID');
 
-        const session = $page.data.session;
-        if (session) {
-            fetch('https://api-stage.csai.site//login', {
-                method: 'POST',
-                headers: {
-                    'accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    github_username: session.user?.name,
-                    token: 'test:VongOahophufshepwucsimyig5ogukir'
+        if (!sessionId) {
+            const session = $page.data.session;
+            if (session) {
+                fetch(`${PUBLIC_VITE_API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        github_username: session.user?.name,
+                        token: PUBLIC_VITE_API_TOKEN
+                    })
                 })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    sessionId = data['session_id'] || "No Session ID returned";
-                    if (sessionId != null) {
-                        setCookie('sessionID', sessionId, 7); // Cookie expires in 7 days
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching session ID:", error);
-                    sessionId = "Error fetching session ID";
-                });
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        sessionId = data['session_id'] || "No Session ID returned";
+                        if (sessionId != null) {
+                            setCookie('sessionID', sessionId, 7); // Cookie expires in 7 days
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching session ID:", error);
+                        sessionId = "Error fetching session ID";
+                    });
+            }
         }
     });
 </script>
@@ -54,7 +71,7 @@
         <p>Your email is {$page.data.session.user?.email}</p>
         <p>Your Session expires {$page.data.session.expires}</p>
         <p>Seminarian-Session-ID: {sessionId}</p>
-        <button on:click={() => signOut()} class="bg-blue-500 py-1 px-2 text-white font-bold">Sign out</button>
+        <button on:click={() => handleSignOut()} class="bg-blue-500 py-1 px-2 text-white font-bold">Sign out</button>
     {:else}
         <h1>You are not logged in</h1>
         <h1>Welcome to Our Site</h1>
