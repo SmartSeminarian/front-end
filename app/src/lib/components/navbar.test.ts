@@ -89,7 +89,7 @@ test("smartSeminarianLink is active and the rest are not, when url is '/dashboar
 
 });
 
-test("coursesLink is active and the rest are not, when url is '/courses'", async () => {
+test("coursesLink is active and the rest are not, when url is '/concepts'", async () => {
 	
 	const { __setMockUrl } = await vi.importMock('$app/stores')
 
@@ -129,7 +129,7 @@ test("trainingLink is active and the rest are not, when url is '/training'", asy
 
 });
 
-test("feedback is active and the rest are not, when url is '/feedback'", async () => {
+test("chat is active and the rest are not, when url is '/chat'", async () => {
 	
 	const { __setMockUrl } = await vi.importMock('$app/stores')
 
