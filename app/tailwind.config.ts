@@ -26,7 +26,6 @@ const config: Config = {
 				ssLightGray: "#D1D9E1",       // Slightly lighter for a cleaner look
 				ssGray: "#5b5a66",            // Slightly darker for better contrast
 				ssDarkGray: "#383642",            // Slightly darker for better contrast
-
 				border: "hsl(var(--border) / <alpha-value>)",
 				input: "hsl(var(--input) / <alpha-value>)",
 				ring: "hsl(var(--ring) / <alpha-value>)",
