@@ -3,7 +3,8 @@
     import { onDestroy, onMount } from 'svelte';
     import type * as Monaco from 'monaco-editor/esm/vs/editor/editor.api';
     import Navbar from "@/components/Navbar.svelte";
-    import { getCookie } from '$lib/cookies'; // Ensure this path is correct
+    import { getCookie } from '$lib/cookies';
+    import {PUBLIC_VITE_API_URL} from "$env/static/public"; // Ensure this path is correct
 
     let editor: Monaco.editor.IStandaloneCodeEditor;
     let monaco: typeof Monaco;
@@ -22,13 +23,14 @@
         }
 
         try {
-            const response = await fetch('https://api-stage.csai.site/problem', {
+            const response = await fetch(`${PUBLIC_VITE_API_URL}/concept`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Session-ID': sessionId
                 }
             });
+            console.log("Response:", response);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

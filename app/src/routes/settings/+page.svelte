@@ -1,13 +1,13 @@
 <script>
     import { onMount } from 'svelte';
     import Navbar from "@/components/Navbar.svelte";
+    import {PUBLIC_VITE_API_URL} from "$env/static/public";
 
     let version = 'no version yet';
-    const API_URL = 'https://api-stage.csai.site';
 
     onMount(async () => {
         try {
-            const response = await fetch(`${API_URL}/version`);
+            const response = await fetch(`${PUBLIC_VITE_API_URL}/version`);
             console.log("API URL:", API_URL);
 
             if (!response.ok) {
