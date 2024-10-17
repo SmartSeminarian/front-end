@@ -37,9 +37,10 @@
             }
 
             const data = await response.json();
-            apiDescription = data.description || 'No description available';
-            apiExampleInput = data.exampleInput || 'No example input available';
-            apiExampleOutput = data.exampleOutput || 'No example output available';
+            console.log(data);
+            apiDescription = data.problem.description || 'No description available';
+            apiExampleInput = data.problem.exampleInput || 'No example input available';
+            apiExampleOutput = data.problem.exampleOutput || 'No example output available';
         } catch (error) {
             apiDescription = 'Error fetching text';
         }
