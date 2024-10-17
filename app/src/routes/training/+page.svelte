@@ -23,7 +23,7 @@
         }
 
         try {
-            const response = await fetch(`${PUBLIC_VITE_API_URL}/concept`, {
+            const response = await fetch(`${PUBLIC_VITE_API_URL}/problem`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
