@@ -20,6 +20,22 @@
         currentPath = url.pathname;
     });
 
+
+    function deleteAllCookies() {
+        const cookies = document.cookie.split(';');
+        cookies.forEach((cookie) => {
+            const eqPos = cookie.indexOf('=');
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+        });
+    }
+
+    const handleSignOut = () => {
+        deleteAllCookies();
+        signOut();
+    };
+
+
     const isActive = (path: string) => currentPath === path ? 'active' : '';
 </script>
 
@@ -44,14 +60,14 @@
         <a href="/dashboard" class="nav-link {isActive('/dashboard')}">
             Smart Seminarian
         </a>
-        <a href="/courses" class="nav-link {isActive('/courses')}">
-            Courses
+        <a href="/concepts" class="nav-link {isActive('/concepts')}">
+            Concepts
         </a>
         <a href="/training" class="nav-link {isActive('/training')}">
             Training
         </a>
-        <a href="/feedback" class="nav-link {isActive('/feedback')}">
-            Feedback
+        <a href="/chat" class="nav-link {isActive('/chat')}">
+            Chat
         </a>
     </nav>
 
@@ -69,9 +85,9 @@
                     <span class="sr-only">Acme Inc</span>
                 </a>
                 <a href="/dashboard" class="nav-link {isActive('/dashboard')}"> Dashboard </a>
-                <a href="/courses" class="nav-link {isActive('/courses')}"> Courses </a>
+                <a href="/concepts" class="nav-link {isActive('/concepts')}"> Concepts </a>
                 <a href="/training" class="nav-link {isActive('/training')}"> Training </a>
-                <a href="/feedback" class="nav-link {isActive('/feedback')}"> Feedback </a>
+                <a href="/chat" class="nav-link {isActive('/chat')}"> Chat </a>
             </nav>
         </Sheet.Content>
     </Sheet.Root>
@@ -110,7 +126,7 @@
                 <DropdownMenu.Item>Settings</DropdownMenu.Item>
                 <DropdownMenu.Item>Support</DropdownMenu.Item>
                 <DropdownMenu.Separator />
-                <DropdownMenu.Item on:click={() => signOut()}>Logout</DropdownMenu.Item>
+                <DropdownMenu.Item on:click={handleSignOut}>Logout</DropdownMenu.Item>
             </DropdownMenu.Content>
         </DropdownMenu.Root>
     </div>
