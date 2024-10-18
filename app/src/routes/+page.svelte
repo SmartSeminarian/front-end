@@ -88,7 +88,7 @@
                     });
             }
         }
-    });
+    );
 </script>
 
 <Navbar />
@@ -121,6 +121,7 @@
             </div>
         {/if}
     </Card.Header>
+</Card.Root>
 
 <style>
     .container {
