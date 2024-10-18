@@ -3,6 +3,7 @@
     import Navbar from "@/components/Navbar.svelte";
     import {PUBLIC_VITE_API_URL} from "$env/static/public";
 
+
     let version = 'no version yet';
 
     onMount(async () => {
@@ -23,3 +24,4 @@
 
 <Navbar/>
 <p>UI Version: {version}</p>
+

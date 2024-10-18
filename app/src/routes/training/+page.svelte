@@ -115,15 +115,6 @@ console.log("Hello, " + fullName); // Output: "Hello, Smart Seminarian"`,
     </div>
 </div>
 <style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f5f5f5;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-    }
 
     .container {
         display: flex;
