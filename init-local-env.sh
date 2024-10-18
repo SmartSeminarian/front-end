@@ -42,13 +42,17 @@ echo "VERSION_FILE=$VERSION_FILE"  >> ./.env
 echo "Version: $BRANCH `hostname` `date`" > $VERSION_FILE
 
 read -p "Enter AUTH_GITHUB_ID: " AUTH_GITHUB_ID
-read -p "Enter AUTH_GITHUB_SECRET: " AUTH_GITHUB_SECRET 
+read -p "Enter AUTH_GITHUB_SECRET: " AUTH_GITHUB_SECRET
+read -p "Enter PUBLIC_VITE_API_URL: " PUBLIC_VITE_API_URL
+read -p "Enter PUBLIC_VITE_API_TOKEN: " PUBLIC_VITE_API_TOKEN
 
 AUTH_SECRET="$AUTH_GITHUB_SECRET"
 
 echo "AUTH_GITHUB_ID=$AUTH_GITHUB_ID" >> ./.env
 echo "AUTH_GITHUB_SECRET=$AUTH_GITHUB_SECRET" >> ./.env
 echo "AUTH_SECRET=$AUTH_SECRET" >> ./.env
+echo "PUBLIC_VITE_API_URL=$PUBLIC_VITE_API_URL" >> ./.env
+echo "PUBLIC_VITE_API_TOKEN=$PUBLIC_VITE_API_TOKEN" >> ./.env
 
 cp ./.env ./smart-seminarian-frontend/.env
 
