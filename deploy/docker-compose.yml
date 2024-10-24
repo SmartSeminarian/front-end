@@ -8,7 +8,7 @@ services:
 #UNCOMMENT_ME_FOR_DEV          context: .
 #UNCOMMENT_ME_FOR_DEV          dockerfile: ./Dockerfile
         ports:
-            - "5000"
+            - "5137:5137"
         env_file:
             - ./.env
         volumes:
@@ -25,17 +25,17 @@ services:
         restart: unless-stopped
         
 #DELETE_BLOCK_FOR_DEV
-    tunnel:
-        container_name:  ${CONTAINER_NAME}_tunnel
-        depends_on:
-            -   service
-        env_file:
-            - ./.env
-        image: cloudflare/cloudflared:latest
-        command: [ "tunnel",
-                   "--no-autoupdate",
-                   "run",
-                   "--token",
-                   "$CF_TOKEN"
-        ]
+#    tunnel:
+#        container_name:  ${CONTAINER_NAME}_tunnel
+#        depends_on:
+#            -   service
+#        env_file:
+#            - ./.env
+#        image: cloudflare/cloudflared:latest
+#        command: [ "tunnel",
+#                   "--no-autoupdate",
+#                   "run",
+#                   "--token",
+#                   "$CF_TOKEN"
+#        ]
 #DELETE_BLOCK_FOR_DEV

@@ -69,8 +69,10 @@
                 }
             });
 
+            console.log("response", response);
+
             if (!response.ok) {
-                throw new Error('Failed to fetch concepts');
+                throw new Error('Failed to fetch concepts, status: ' + response.status);
             }
 
             concepts = await response.json() as Concept[];

@@ -1,7 +1,11 @@
 {
   "dependencies": {
     "@auth/sveltekit": "^1.4.1",
-    "@splinetool/loader": "^1.7.8"
+    "@splinetool/loader": "^1.7.8",
+    "add": "^2.0.6",
+    "card": "^2.5.4",
+    "lucide-svelte": "^0.441.0",
+    "shadcn-svelte": "^0.13.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.7",

@@ -49,7 +49,10 @@ AUTH_SECRET=<32 Char Long Random String>
 SEMINARIAN_STAGE_API_URL=https://api-stage.csai.site/
 SEMINARIAN_API_URL=<The API URL> (for me it is this: http://localhost:5050/) 
 SEMINARIAN_API_TOKEN=<API Token from our api> (f.e.: test:VongOahophufshepwucsimyig5ogukir)
+VITE_API_URL=http://localhost:5050 
 ```
+
+environment variable must still be prefixed with VITE_ because SvelteKit requires this prefix for exposing environment variables to the frontend!
 
 ## Developing (locally)
 
