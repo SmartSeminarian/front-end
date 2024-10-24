@@ -3,7 +3,7 @@
     import { page } from '$app/stores';
 
     // Icons imports
-    import Home from "lucide-svelte/icons/home";
+
     import Menu from "lucide-svelte/icons/menu";
     import Search from "lucide-svelte/icons/search";
     import CircleUser from "lucide-svelte/icons/circle-user";
@@ -13,6 +13,7 @@
     import { Input } from "$lib/components/ui/input/index.js";
     import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
     import {signOut} from "@auth/sveltekit/client";
+    import {Home} from "lucide-svelte";
 
     let currentPath = '';
 
