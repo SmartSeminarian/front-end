@@ -2,5 +2,5 @@
 
 cd /app/
 
-npm run dev -- --host --port 5137
+npm run dev -- --host --port 5000
 
