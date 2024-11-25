@@ -118,16 +118,26 @@
             <DropdownMenu.Content align="end">
                 <DropdownMenu.Label>
                     {#if $page.data.session}
-                        {$page.data.session.user?.name}
+                        <a href="/profile" class="nav-link">
+                            {$page.data.session.user?.name}
+                        </a>
                     {:else}
                         My Account
                     {/if}
                 </DropdownMenu.Label>
                 <DropdownMenu.Separator />
                 <DropdownMenu.Item>
-                    <a href="/settings" class="nav-link"> Settings </a>
+                    <a href="/settings" class="nav-link">Settings </a>
                 </DropdownMenu.Item>
-                <DropdownMenu.Item>Support</DropdownMenu.Item>
+                <DropdownMenu.Item>
+                    <a href="/privacy" class="nav-link">Privacy Policy </a>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item>
+                    <a href="/terms" class="nav-link">Terms & Conditions</a>
+                </DropdownMenu.Item>
+                <DropdownMenu.Item>
+                    <a href="/about" class="nav-link">About us</a>
+                </DropdownMenu.Item>
                 <DropdownMenu.Separator />
                 <DropdownMenu.Item on:click={handleSignOut}>Logout</DropdownMenu.Item>
             </DropdownMenu.Content>
