@@ -8,7 +8,7 @@
     onMount(async () => {
         try {
             const response = await fetch(`${PUBLIC_VITE_API_URL}/version`);
-            console.log("API URL:", API_URL);
+            console.log("API URL:", PUBLIC_VITE_API_URL);
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
