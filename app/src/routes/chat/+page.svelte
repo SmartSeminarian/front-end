@@ -11,6 +11,7 @@
     import Navbar from "@/components/Navbar.svelte";
     import {PUBLIC_VITE_API_URL} from "$env/static/public";
 
+
     interface Message {
         content: {
             assistant: string;
