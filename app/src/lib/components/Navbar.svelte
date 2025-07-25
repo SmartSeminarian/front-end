@@ -70,6 +70,12 @@
         <a href="/chat" class="nav-link {isActive('/chat')}">
             Chat
         </a>
+        <a href="/learning" class="nav-link {isActive('/learning')}">
+            Learning Paths
+        </a>
+        <a href="/graph" class="nav-link {isActive('/graph')}">
+            Knowledge Graph
+        </a>
     </nav>
 
     <Sheet.Root>
@@ -89,6 +95,8 @@
                 <a href="/concepts" class="nav-link {isActive('/concepts')}"> Concepts </a>
                 <a href="/training" class="nav-link {isActive('/training')}"> Training </a>
                 <a href="/chat" class="nav-link {isActive('/chat')}"> Chat </a>
+                <a href="/learning" class="nav-link {isActive('/learning')}"> Learning Paths </a>
+                <a href="/graph" class="nav-link {isActive('/graph')}"> Knowledge Graph </a>
             </nav>
         </Sheet.Content>
     </Sheet.Root>

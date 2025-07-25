@@ -26,7 +26,7 @@ git clone https://github.com/SmartSeminarian/front-end.git
 ```
 ```bash
 # navigate to the project directory
-cd smart-seminarian-frontend
+cd front-end
 ```
 ```bash
 # install dependencies
