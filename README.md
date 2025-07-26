@@ -8,7 +8,16 @@ Everything you need to build a Svelte project, powered by [`create-svelte`](http
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Developing](#developing)
+- [Developing (Docker)](#developing-docker)
+- [Testing](#testing)
 - [Building](#building)
+- [Frontend Documentation](#frontend-documentation)
+  - [Architecture Overview](#architecture-overview)
+  - [Key Features](#key-features)
+  - [Pages and Routes](#pages-and-routes)
+  - [UI Components](#ui-components)
+  - [Knowledge Graph](#knowledge-graph)
+  - [Learning Paths](#learning-paths)
 - [Folder Structure](#folder-structure)
 
 ## Prerequisites
@@ -67,13 +76,21 @@ npm run dev -- --open
 
 ## Developing (Docker)
 
-```
-# Initialize envivonment variables
+To run the application using Docker, follow these steps in order:
+
+```bash
+# 1. Initialize environment variables (you'll be prompted for GitHub OAuth credentials and API URLs)
 ./init-local-env.sh
 ```
+
+```bash
+# 2. Build the local Docker image
+./build-local-image.sh
 ```
-# Start containers
-docker compose up --build
+
+```bash
+# 3. Start the containers
+docker compose up
 ```
 
 ## Testing 
@@ -95,6 +112,77 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+## Frontend Documentation
+
+### Architecture Overview
+
+The Smart Seminarian frontend is built with SvelteKit, a framework for building web applications of all sizes. The application follows these architectural principles:
+
+- **Component-Based**: UI is broken down into reusable Svelte components
+- **Routing**: SvelteKit's file-based routing system for navigation
+- **State Management**: Svelte stores for global state management
+- **API Integration**: Fetch API for communication with the backend
+- **Authentication**: GitHub OAuth integration for user authentication
+- **Responsive Design**: Tailwind CSS for responsive and mobile-friendly UI
+
+### Key Features
+
+- **GitHub Authentication**: Secure login using GitHub OAuth
+- **Concept Management**: Create, view, and manage learning concepts
+- **Knowledge Graph**: Interactive visualization of concepts and their relationships
+- **Learning Paths**: Generate and visualize personalized learning paths
+- **Chat Interface**: Interactive chat with AI tutor for learning assistance
+- **Training Exercises**: Practice problems and coding exercises
+- **User Dashboard**: Overview of learning progress and activities
+
+### Pages and Routes
+
+- **/** - Home page with application overview
+- **/dashboard** - User dashboard with learning progress and recent activities
+- **/concepts** - Browse and manage learning concepts
+- **/concepts/[id]** - View and interact with a specific concept
+- **/chat** - Chat interface for interacting with the AI tutor
+- **/training** - Access coding exercises and practice problems
+- **/learning** - Generate and manage learning paths
+- **/graph** - Interactive knowledge graph visualization
+- **/settings** - User settings and preferences
+
+### UI Components
+
+The application uses a custom UI component library built with Tailwind CSS. Key components include:
+
+- **Navbar**: Navigation bar with responsive mobile menu
+- **Card**: Container for content with consistent styling
+- **Button**: Various button styles for different actions
+- **Input**: Form input elements with validation
+- **Badge**: Display status or category information
+- **Progress**: Visual representation of completion or mastery
+- **Sheet**: Slide-out panel for mobile navigation
+- **Dropdown**: Menu for additional options
+
+### Knowledge Graph
+
+The knowledge graph visualization is built using Sigma.js and Graphology libraries. It provides:
+
+- **Interactive Network View**: Visualize concepts and their relationships
+- **Concept Nodes**: Nodes representing learning concepts, colored by difficulty and mastery level
+- **Relationship Edges**: Connections between concepts showing prerequisites, alternatives, etc.
+- **Filtering**: Filter the graph by concept type, difficulty, or mastery level
+- **Zoom and Pan**: Navigate the graph with zoom and pan controls
+- **Node Selection**: Click on nodes to view detailed information
+- **Layout Options**: Different layout algorithms for optimal visualization
+
+### Learning Paths
+
+The learning path feature helps users create personalized learning journeys:
+
+- **Path Generation**: AI-powered generation of learning paths based on user goals
+- **Path Visualization**: Visual representation of the learning path as a directed graph
+- **Progress Tracking**: Track mastery level for each concept in the path
+- **Concept Relationships**: View relationships between concepts in the path
+- **Interactive UI**: Mark progress, explore concepts, and navigate through the path
+- **Integration with Knowledge Graph**: View the path in the context of the full knowledge graph
 
 ## Folder Structure
 
